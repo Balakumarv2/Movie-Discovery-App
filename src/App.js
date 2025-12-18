@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Search, Star, PlayCircle } from 'lucide-react';
 import './App.css';
 
 const API_KEY = "de30fa6ce4b0ed18f938f83c1533c02d";
@@ -11,14 +10,17 @@ function App() {
   const [movies, setMovies] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
 
-  
   useEffect(() => {
     getMovies(`${API_URL}/discover/movie?sort_by=popularity.desc&api_key=${API_KEY}`);
   }, []);
 
   const getMovies = async (url) => {
-    const res = await axios.get(url);
-    setMovies(res.data.results);
+    try {
+      const res = await axios.get(url);
+      setMovies(res.data.results);
+    } catch (error) {
+      console.error("Error fetching movies:", error);
+    }
   };
 
   const handleSearch = (e) => {
@@ -30,9 +32,9 @@ function App() {
 
   return (
     <div className="movie-app">
-      <header>
-        <h1 className="logo">Cine<span className="bold">Flix</span></h1>
-        <form onSubmit={handleSearch}>
+      <header className="navbar">
+        <h1 className="logo">Movie<span>Flix</span></h1>
+        <form className="search-form" onSubmit={handleSearch}>
           <div className="search-bar">
             <input 
               type="text" 
@@ -40,29 +42,38 @@ function App() {
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
             />
-            <button type="submit"><Search size={20} /></button>
+            <button type="submit" className="search-btn">
+             
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            </button>
           </div>
         </form>
       </header>
 
       <main className="movie-grid">
-        {movies.map((movie) => (
+        {movies.length > 0 ? movies.map((movie) => (
           <div key={movie.id} className="movie-card">
             <div className="poster-container">
-              <img src={movie.poster_path ? IMG_PATH + movie.poster_path : "https://via.placeholder.com/500x750"} alt={movie.title} />
+              <img 
+                src={movie.poster_path ? IMG_PATH + movie.poster_path : "https://via.placeholder.com/500x750?text=No+Image"} 
+                alt={movie.title} 
+              />
               <div className="overlay">
-                <button className="play-btn"><PlayCircle size={40} /></button>
+                <button className="play-btn">
+                  
+                  <svg width="50" height="50" viewBox="0 0 24 24" fill="white"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                </button>
               </div>
             </div>
             <div className="movie-info">
               <h3>{movie.title}</h3>
               <div className="rating">
-                <Star size={16} fill="#FFD700" color="#FFD700" />
-                <span>{movie.vote_average}</span>
+                <span className="star-icon">★</span>
+                <span>{movie.vote_average.toFixed(1)}</span>
               </div>
             </div>
           </div>
-        ))}
+        )) : <p className="no-results">No movies found. Try a different search!</p>}
       </main>
     </div>
   );
