@@ -12,7 +12,7 @@ body {
   color: var(--text-color);
 }
 
-/* Header & Navbar */
+
 .navbar {
   display: flex;
   justify-content: space-between;
@@ -35,7 +35,7 @@ body {
   color: #fff;
 }
 
-/* Search Bar */
+
 .search-bar {
   display: flex;
   background: rgba(0, 0, 0, 0.75);
@@ -62,7 +62,7 @@ body {
   align-items: center;
 }
 
-/* Movie Grid */
+
 .movie-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
@@ -70,7 +70,7 @@ body {
   padding: 2rem 4%;
 }
 
-/* Movie Card */
+
 .movie-card {
   background-color: var(--card-bg);
   border-radius: 8px;
@@ -94,7 +94,7 @@ body {
   object-fit: cover;
 }
 
-/* Overlay & Play Button */
+
 .overlay {
   position: absolute;
   top: 0;
