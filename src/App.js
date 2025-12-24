@@ -55,7 +55,7 @@ function App() {
           <div key={movie.id} className="movie-card">
             <div className="poster-container">
               <img 
-                src={movie.poster_path ? IMG_PATH + movie.poster_path : "https://via.placeholder.com/500x750?text=No+Image"} 
+                src={movie.poster_path ? IMG_PATH + movie.poster_path : "https://picsum.photos/500/750?grayscale"} 
                 alt={movie.title} 
               />
               <div className="overlay">
